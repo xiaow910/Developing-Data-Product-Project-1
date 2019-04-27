@@ -1,0 +1,59 @@
+---
+title: "Developing Data Product Project"
+author: "Xiao Wang"
+date: "April 24.2019"
+theme: cerulean
+---
+
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 16px;
+  }
+
+}
+h1.title {
+  font-size: 38px;
+  color: DarkRed;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: DarkBlue;
+}
+
+</style>
+
+#Introduction
+This project was created as part of the Developing Data Products course project. 
+The goal of the project was to create a web page using R Markdown that features a map created with Leaflet, 
+and to host the resulting web page on either GitHub Pages, RPubs, or NeoCities.
+For each icon the link is provided so that clicking on it redirects to the restaurant yelp pages.
+Map shows few selected restaurant, out of many more.
+
+#Data Sources
+The longitude and lantitude data was taken from Google Maps and Latitude Wesbsite
+
+# Featured Restaurants in Atlanta,GA
+
+```{r}
+set.seed(2019)
+library(leaflet)
+
+df <- data.frame( lat = c(33.8390314,33.8507556,33.847381,33.8268097)
+                       , lng = c(-84.3791092, -84.3616707, -84.323776, -84.3326904) )
+
+web <- c(
+        "<a href='https://www.yelp.com/biz/the-capital-grille-atlanta'>The Capital Grille</a>",
+        "<a href='https://www.yelp.com/biz/flying-biscuit-cafe-atlanta-8'>Flying Biscuit Cafe</a>",
+        "<a href='http://www.yelp.com/biz/shaking-crawfish-doraville-3'>Shaking Crawfish</a>",
+        "<a href='https://www.yelp.com/biz/grub-burger-bar-atlanta-3?osq=Grub+Burger+Bar'>Grub Burger Bar</a>"
+)
+
+icon <- makeIcon(
+        "dine.png", 20, 20)  
+
+df %>% 
+        leaflet() %>%
+        addTiles() %>% setView(lng = -84.34931, lat = 33.84099,  zoom = 13) %>% 
+        addMarkers(icon=icon, popup = web)
+```
